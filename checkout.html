@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>FASHION</h1>
+    <nav id="nav"></nav>
+  </header>
+
+  <h2 style="text-align:center;margin:20px 0">Checkout</h2>
+
+  <div style="max-width:1100px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:1.2fr 0.8fr;gap:20px">
+    <form id="checkoutForm" style="max-width:none;margin:0;background:#fff;padding:20px;border-radius:10px">
+      <h3 style="margin-bottom:10px">Shipping & Payment</h3>
+
+      <input id="addressName" placeholder="Recipient name" />
+      <input id="addressLine1" placeholder="Address line" />
+      <input id="addressCity" placeholder="City" />
+      <input id="addressCountry" placeholder="Country" />
+      <input id="addressPhone" placeholder="Phone" />
+
+      <select id="paymentMethod" style="width:100%;margin:10px 0;padding:10px">
+        <option value="">Select payment method</option>
+        <option value="card">Card (simulated)</option>
+        <option value="cod">Cash on delivery</option>
+        <option value="paypal">PayPal (simulated)</option>
+      </select>
+
+      <p id="checkoutMsg" style="color:#d33;margin-top:10px"></p>
+      <button type="submit" style="width:100%">Place order</button>
+    </form>
+
+    <div id="checkoutSummary" style="align-self:start"></div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

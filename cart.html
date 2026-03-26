@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cart</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<header>
+    <h1>FASHION</h1>
+    <nav id="nav"></nav>
+</header>
+
+<h2 style="text-align:center;margin:20px 0">My Cart</h2>
+
+<div id="cartItems" style="max-width:1100px;margin:0 auto;padding:0 20px"></div>
+
+<div style="max-width:1100px;margin:20px auto 40px;padding:0 20px">
+    <div style="background:#fff;padding:15px;border-radius:10px">
+        <h3 style="margin-bottom:10px">Totals</h3>
+        <div style="display:flex;justify-content:space-between;gap:10px">
+            <div>Subtotal</div><div id="cartSubtotal"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:10px">
+            <div>Shipping</div><div id="cartShipping"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:10px">
+            <div>Tax</div><div id="cartTax"></div>
+        </div>
+        <hr/>
+        <div style="display:flex;justify-content:space-between;gap:10px;font-weight:bold">
+            <div>Total</div><div id="cartTotal"></div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:15px">
+            <button type="button" id="proceedToCheckoutBtn">Proceed to Checkout</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

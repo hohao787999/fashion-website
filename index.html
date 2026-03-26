@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fashion Shop</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>FASHION</h1>
+    <nav id="nav"></nav>
+</header>
+
+<section class="banner">
+    <h2>Exclusive Fashion Deals</h2>
+</section>
+
+<section style="max-width:1100px;margin:20px auto;padding:0 20px">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:15px">
+        <div style="flex:1;min-width:240px">
+            <input id="searchInput" type="text" placeholder="Search products..." />
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <select id="categoryFilter">
+                <option value="All">All categories</option>
+            </select>
+            <select id="sortSelect">
+                <option value="priceAsc">Price: Low to High</option>
+                <option value="priceDesc">Price: High to Low</option>
+                <option value="nameAsc">Name: A to Z</option>
+            </select>
+            <span id="productCount" style="font-weight:bold;color:#111"></span>
+        </div>
+    </div>
+</section>
+
+<section class="products" id="product-list"></section>
+
+<script src="js/main.js"></script>
+</body>
+</html>
