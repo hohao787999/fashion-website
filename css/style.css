@@ -7,7 +7,9 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: #f9f9f9;
+    background: url('../images/background.jpg') center/cover no-repeat fixed;
+    color: #ffffff;
+    min-height: 100vh;
 }
 
 /* HEADER */
@@ -64,6 +66,7 @@ nav a:hover {
 
 .product {
     background: white;
+    border: 2px solid #d4af37;
     border-radius: 12px;
     padding: 15px;
     text-align: center;
@@ -73,6 +76,8 @@ nav a:hover {
 
 .product:hover {
     transform: translateY(-5px);
+    border-color: #ffd700;
+    box-shadow: 0 6px 14px rgba(212,175,55,0.45);
 }
 
 .product img {
@@ -80,8 +85,75 @@ nav a:hover {
     border-radius: 10px;
 }
 
+/* SEARCH / FORM INPUT */
+#searchInput,
+#categoryFilter,
+#sortSelect,
+input,
+textarea {
+    border: 2px solid #d4af37;
+    border-radius: 12px;
+    padding: 10px;
+    outline: none;
+    background: white;
+    color: #111;
+    width: 100%;
+    margin: 10px 0;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+input::placeholder,
+textarea::placeholder,
+#searchInput::placeholder,
+#categoryFilter::placeholder,
+#sortSelect::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+#searchInput:focus,
+#categoryFilter:focus,
+#sortSelect:focus,
+input:focus,
+textarea:focus {
+    border-color: #ffd700;
+    box-shadow: 0 0 8px rgba(212,175,55,0.5);
+}
+
 .product h3 {
     margin: 10px 0;
+}
+
+.product-description {
+    color: #ff0000;
+    font-weight: normal;
+    font-size: 13px;
+    height: 3.6em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin: 8px 0;
+    line-height: 1.2;
+}
+
+.product-description.expanded {
+    height: auto;
+    -webkit-line-clamp: unset;
+}
+
+.product-description-toggle {
+    color: #d4af37;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.product-description-toggle:hover {
+    color: #ffd700;
 }
 
 .product p {
@@ -113,10 +185,31 @@ form {
     border-radius: 10px;
 }
 
-input, textarea {
-    width: 100%;
-    margin: 10px 0;
-    padding: 10px;
+/* Admin form inputs */
+#adminProductForm input,
+#adminProductForm textarea {
+    border: 2px solid #d4af37 !important;
+    border-radius: 12px !important;
+    background: white !important;
+    color: #111 !important;
+    width: 100% !important;
+    padding: 10px !important;
+    margin: 10px 0 !important;
+    box-sizing: border-box !important;
+    font-size: 14px !important;
+    font-family: inherit !important;
+}
+
+#adminProductForm input::placeholder,
+#adminProductForm textarea::placeholder {
+    color: #999 !important;
+    opacity: 1 !important;
+}
+
+#adminProductForm input:focus,
+#adminProductForm textarea:focus {
+    border-color: #ffd700 !important;
+    box-shadow: 0 0 8px rgba(212,175,55,0.5) !important;
 }
 
 /* CART */

@@ -391,7 +391,8 @@ function initCatalogPage() {
         <img src="${escapeHTML(p.img)}" alt="${escapeHTML(p.name)}" />
         <h3>${escapeHTML(p.name)}</h3>
         <p>${escapeHTML(formatMoney(p.price))}</p>
-        <p style="color:#333;font-weight:normal;font-size:13px">${escapeHTML(p.description)}</p>
+        <p class="product-description">${escapeHTML(p.description)}</p>
+        <a href="javascript:void(0)" class="product-description-toggle" style="display:none">More info...</a>
         <p style="color:#777;font-size:12px">${escapeHTML(stockLabel)}</p>
         <div style="margin-top:10px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
           <a class="details-link" href="product.html?id=${encodeURIComponent(p.id)}">View</a>
@@ -401,6 +402,22 @@ function initCatalogPage() {
         </div>
       `;
       container.appendChild(card);
+      
+      // Handle more info toggle
+      const descEl = card.querySelector(".product-description");
+      const toggleEl = card.querySelector(".product-description-toggle");
+      if (descEl && toggleEl) {
+        // Show toggle only if text is truncated
+        const isOverflowing = descEl.scrollHeight > descEl.clientHeight + 2;
+        if (isOverflowing) {
+          toggleEl.style.display = "inline";
+          toggleEl.addEventListener("click", (e) => {
+            e.preventDefault();
+            const isExpanded = descEl.classList.toggle("expanded");
+            toggleEl.innerText = isExpanded ? "Less info" : "More info...";
+          });
+        }
+      }
     });
 
     if (productCount) productCount.innerText = String(list.length);
