@@ -18,10 +18,19 @@
       <h3 style="margin-bottom:10px">Shipping & Payment</h3>
 
       <input id="addressName" placeholder="Recipient name" />
+      <span id="err-addressName" style="color:#d33;font-size:12px;display:none"></span>
+
       <input id="addressLine1" placeholder="Address line" />
+      <span id="err-addressLine1" style="color:#d33;font-size:12px;display:none"></span>
+
       <input id="addressCity" placeholder="City" />
+      <span id="err-addressCity" style="color:#d33;font-size:12px;display:none"></span>
+
       <input id="addressCountry" placeholder="Country" />
+      <span id="err-addressCountry" style="color:#d33;font-size:12px;display:none"></span>
+
       <input id="addressPhone" placeholder="Phone" />
+      <span id="err-addressPhone" style="color:#d33;font-size:12px;display:none"></span>
 
       <select id="paymentMethod" style="width:100%;margin:10px 0;padding:10px">
         <option value="">Select payment method</option>
@@ -29,6 +38,7 @@
         <option value="cod">Cash on delivery</option>
         <option value="paypal">PayPal (simulated)</option>
       </select>
+      <span id="err-paymentMethod" style="color:#d33;font-size:12px;display:none"></span>
 
       <p id="checkoutMsg" style="color:#d33;margin-top:10px"></p>
       <button type="submit" style="width:100%">Place order</button>

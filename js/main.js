@@ -640,9 +640,87 @@ function initCheckoutPage() {
 
   renderSummary();
 
+  // Real-time validation functions
+  const validators = {
+    addressName: (value) => {
+      if (!value || value.length < 2) return "Name must be at least 2 characters";
+      if (!/^[a-zA-Z\s'-]+$/.test(value)) return "Name can only contain letters, spaces, hyphens and apostrophes";
+      return "";
+    },
+    addressLine1: (value) => {
+      if (!value || value.length < 5) return "Address must be at least 5 characters";
+      return "";
+    },
+    addressCity: (value) => {
+      if (!value) return "City is required";
+      if (!/^[a-zA-Z\s'-]+$/.test(value)) return "City can only contain letters, spaces, hyphens and apostrophes";
+      return "";
+    },
+    addressCountry: (value) => {
+      if (!value) return "Country is required";
+      if (!/^[a-zA-Z\s'-]+$/.test(value)) return "Country can only contain letters, spaces, hyphens and apostrophes";
+      return "";
+    },
+    addressPhone: (value) => {
+      if (!value || value.length < 7) return "Phone must be at least 7 characters";
+      if (!/^\d[\d\s\-\(\)]{5,}$/.test(value)) return "Phone must contain only numbers, spaces, hyphens and parentheses";
+      return "";
+    },
+    paymentMethod: (value) => {
+      if (!value) return "Please select a payment method";
+      return "";
+    }
+  };
+
+  // Attach real-time validation to each field
+  Object.keys(validators).forEach((fieldId) => {
+    const input = document.getElementById(fieldId);
+    const errorEl = document.getElementById(`err-${fieldId}`);
+    if (!input || !errorEl) return;
+
+    input.addEventListener("blur", () => {
+      const error = validators[fieldId](input.value.trim());
+      if (error) {
+        errorEl.innerText = error;
+        errorEl.style.display = "block";
+      } else {
+        errorEl.style.display = "none";
+      }
+    });
+
+    input.addEventListener("input", () => {
+      const error = validators[fieldId](input.value.trim());
+      if (error) {
+        errorEl.innerText = error;
+        errorEl.style.display = "block";
+      } else {
+        errorEl.style.display = "none";
+      }
+    });
+  });
+
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (msgEl) msgEl.innerText = "";
+
+    // Validate all fields before submission
+    let hasErrors = false;
+    Object.keys(validators).forEach((fieldId) => {
+      const input = document.getElementById(fieldId);
+      const errorEl = document.getElementById(`err-${fieldId}`);
+      if (!input || !errorEl) return;
+
+      const error = validators[fieldId](input.value.trim());
+      if (error) {
+        errorEl.innerText = error;
+        errorEl.style.display = "block";
+        hasErrors = true;
+      } else {
+        errorEl.style.display = "none";
+      }
+    });
+
+    if (hasErrors) return;
 
     const viewItems = getCartItemsView(cart, products);
     if (viewItems.length === 0) {
@@ -650,20 +728,13 @@ function initCheckoutPage() {
       return;
     }
 
-    // Basic validation
-    const addressName = document.getElementById("addressName")?.value?.trim();
-    const addressLine1 = document.getElementById("addressLine1")?.value?.trim();
-    const addressCity = document.getElementById("addressCity")?.value?.trim();
-    const addressCountry = document.getElementById("addressCountry")?.value?.trim();
-    const addressPhone = document.getElementById("addressPhone")?.value?.trim();
-    const paymentMethod = document.getElementById("paymentMethod")?.value;
-
-    if (!addressName || addressName.length < 2) return (msgEl.innerText = "Please enter recipient name.");
-    if (!addressLine1 || addressLine1.length < 5) return (msgEl.innerText = "Please enter address line.");
-    if (!addressCity) return (msgEl.innerText = "Please enter city.");
-    if (!addressCountry) return (msgEl.innerText = "Please enter country.");
-    if (!addressPhone || addressPhone.length < 7) return (msgEl.innerText = "Please enter a valid phone number.");
-    if (!paymentMethod) return (msgEl.innerText = "Please choose a payment method.");
+    // Get validated values
+    const addressName = document.getElementById("addressName").value.trim();
+    const addressLine1 = document.getElementById("addressLine1").value.trim();
+    const addressCity = document.getElementById("addressCity").value.trim();
+    const addressCountry = document.getElementById("addressCountry").value.trim();
+    const addressPhone = document.getElementById("addressPhone").value.trim();
+    const paymentMethod = document.getElementById("paymentMethod").value;
 
     // Re-check stock before order creation
     const currentProducts = getProducts();
@@ -810,13 +881,13 @@ function initOrderDetailPage() {
 
   const steps = statusTimelineSteps(order.status);
   root.innerHTML = `
-    <div style="max-width:900px;margin:40px auto">
+    <div style="max-width:900px;margin:40px auto;color:#111">
       <h2>Order ${escapeHTML(order.id)}</h2>
       <p>Status: <b>${escapeHTML(order.status)}</b></p>
       <p>Payment: ${escapeHTML(order.paymentMethod || "")}</p>
       <p>Created: ${escapeHTML(new Date(order.createdAt).toLocaleString())}</p>
 
-      <div style="margin-top:20px;padding:15px;background:#fff;border-radius:10px">
+      <div style="margin-top:20px;padding:15px;background:#fff;border-radius:10px;color:#111">
         <h3>Shipping address</h3>
         <p>${escapeHTML(order.address?.name || "")}</p>
         <p>${escapeHTML(order.address?.line1 || "")}</p>
@@ -824,7 +895,7 @@ function initOrderDetailPage() {
         <p>${escapeHTML(order.address?.phone || "")}</p>
       </div>
 
-      <div style="margin-top:20px;overflow:auto">
+      <div style="margin-top:20px;overflow:auto;background:#fff;border-radius:10px;padding:15px">
         <table class="admin-table">
           <thead>
             <tr>
@@ -850,7 +921,7 @@ function initOrderDetailPage() {
         </table>
       </div>
 
-      <div style="margin-top:20px;padding:15px;background:#fff;border-radius:10px">
+      <div style="margin-top:20px;padding:15px;background:#fff;border-radius:10px;color:#111">
         <h3>Totals</h3>
         <div style="display:flex;justify-content:space-between;gap:10px">
           <div>Subtotal</div><div>${escapeHTML(formatMoney(order.totals?.subtotal ?? 0))}</div>
@@ -866,7 +937,7 @@ function initOrderDetailPage() {
         </div>
       </div>
 
-      <div style="margin-top:20px;padding:15px;background:#fff;border-radius:10px">
+      <div style="margin-top:20px;padding:15px;background:#fff;border-radius:10px;color:#111">
         <h3>Timeline</h3>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           ${steps
