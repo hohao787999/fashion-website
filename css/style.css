@@ -82,7 +82,12 @@ nav a:hover {
 
 .product img {
     width: 100%;
+    height: auto;
+    max-width: 100%;
+    max-height: 150px;
     border-radius: 10px;
+    object-fit: cover;
+    display: block;
 }
 
 /* SEARCH / FORM INPUT */
@@ -108,7 +113,7 @@ textarea::placeholder,
 #searchInput::placeholder,
 #categoryFilter::placeholder,
 #sortSelect::placeholder {
-    color: #999;
+    color: #aaa;
     opacity: 1;
 }
 
@@ -183,6 +188,23 @@ form {
     background: white;
     padding: 20px;
     border-radius: 10px;
+    color: #111;
+}
+
+form h2 {
+    color: #111;
+    margin-bottom: 15px;
+}
+
+form p {
+    color: #ff4d4d;
+}
+
+form label {
+    color: #111;
+    display: block;
+    margin: 10px 0 5px 0;
+    font-weight: 500;
 }
 
 /* Admin form inputs */

@@ -1303,24 +1303,46 @@ function initLoginPage() {
     e.preventDefault();
     if (msg) msg.innerText = "";
 
-    const email = document.getElementById("loginEmail")?.value?.trim().toLowerCase();
-    const password = document.getElementById("loginPassword")?.value || "";
+    const emailInput = document.getElementById("loginEmail")?.value?.trim().toLowerCase() || "";
+    const passwordInput = document.getElementById("loginPassword")?.value || "";
 
-    if (!email || !email.includes("@")) return (msg.innerText = "Please enter a valid email.");
-    if (!password || password.length < 1) return (msg.innerText = "Please enter your password.");
+    // TC01: Validate empty submission
+    if (!emailInput || !passwordInput) {
+      return (msg.innerText = "Email and password are required");
+    }
+
+    // TC02: Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailInput)) {
+      return (msg.innerText = "Invalid email format");
+    }
 
     const users = getUsers();
-    const user = users.find((u) => String(u.email).toLowerCase() === email);
-    if (!user) return (msg.innerText = "Invalid login.");
+    const user = users.find((u) => String(u.email).toLowerCase() === emailInput);
 
-    const passHash = await sha256Hex(password);
-    if (String(user.passHash) !== String(passHash)) return (msg.innerText = "Invalid login.");
+    // TC03: Validate credentials (email or password incorrect)
+    if (!user) return (msg.innerText = "Invalid email or password");
 
+    const passHash = await sha256Hex(passwordInput);
+    if (String(user.passHash) !== String(passHash)) return (msg.innerText = "Invalid email or password");
+
+    // TC05: Valid login - session created and redirect to home
     setSession(user.id);
+
+    // Show success message
+    if (msg) {
+      msg.innerText = "Login successful!";
+      msg.style.color = "#2ecc71";
+      msg.style.fontWeight = "bold";
+    }
+
     showToast("Welcome back!");
 
-    const next = new URLSearchParams(window.location.search).get("next");
-    window.location.href = next || "index.html";
+    // Redirect after 1 second
+    setTimeout(() => {
+      const next = new URLSearchParams(window.location.search).get("next");
+      window.location.href = next || "index.html";
+    }, 1000);
   });
 }
 
