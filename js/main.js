@@ -48,6 +48,15 @@ const SEED_PRODUCTS = [
     category: "Footwear",
     stock: 10,
   },
+  {
+    id: 4,
+    name: "Hat",
+    price: 15,
+    img: "images/p4.jpg",
+    description: "Stylish hat for sun protection and fashion.",
+    category: "Accessories",
+    stock: 30,
+  },
 ];
 
 function showToast(msg) {
